@@ -3,6 +3,34 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+export const showVacineByAnimal = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { idAnimal } = req.params;
+
+    if (idAnimal) {
+      const vacines = await prisma.vacina.findMany({
+        where: {
+          animalId: +idAnimal,
+        },
+      });
+
+      if (vacines.length < 1) {
+        res.status(404).json({ warning: 'nenhuma vacina encontrada' });
+      } else {
+        res.json(vacines);
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      warning: 'erro interno no servidor',
+    });
+  }
+};
+
 export const showAllVacines = async (
   req: express.Request,
   res: express.Response

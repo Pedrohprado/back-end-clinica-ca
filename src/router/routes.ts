@@ -16,6 +16,7 @@ import {
 import {
   createNewVacine,
   showAllVacines,
+  showVacineByAnimal,
 } from '../controllers/controllerVacine';
 
 export const apiRoutes = express.Router();
@@ -35,4 +36,5 @@ apiRoutes.delete('/deletepatient/:id', deletePatient);
 
 // routes for Vacina
 apiRoutes.get('/vacines', showAllVacines);
+apiRoutes.get('/vacine/:idAnimal', showVacineByAnimal);
 apiRoutes.post('/newvacine/:idAnimal', createNewVacine);
