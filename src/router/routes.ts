@@ -13,6 +13,10 @@ import {
   showAllClients,
   updateClient,
 } from '../controllers/controllerClients';
+import {
+  createNewVacine,
+  showAllVacines,
+} from '../controllers/controllerVacine';
 
 export const apiRoutes = express.Router();
 
@@ -28,3 +32,7 @@ apiRoutes.get('/patients/:id', showPatientsByClient);
 apiRoutes.post('/newpatients/:id', registerNewPatients);
 apiRoutes.put('/updatepatient/:id', updatePatients);
 apiRoutes.delete('/deletepatient/:id', deletePatient);
+
+// routes for Vacina
+apiRoutes.get('/vacines', showAllVacines);
+apiRoutes.post('/newvacine/:idAnimal', createNewVacine);

@@ -60,11 +60,21 @@ export const registerNewPatients = async (
   try {
     const { id } = req.params;
     const body = req.body;
+    const { nome, peso, pelagem, sexo, especie, raca, dataNasc, status } =
+      req.body;
+    const date = new Date(dataNasc);
     if (id) {
       const statusNewPatients: Animal = await prisma.animal.create({
         data: {
-          ...body,
+          nome,
+          peso,
+          pelagem,
+          sexo,
+          especie,
+          raca,
+          dataNasc: date,
           clienteId: +id,
+          status,
         },
       });
 
