@@ -49,9 +49,11 @@ model Atendimento {
 model Vacina {
     id            Int      @id @default(autoincrement())
     nomeVacina    String
+    tipoDeVacina  String
     dataAplicacao DateTime
     proximaVacina DateTime
     observacoes   String?
-    animal        Animal   @relation(fields: [animalId], references: [id])
     animalId      Int
+    dose          String
+    animal        Animal   @relation(fields: [animalId], references: [id])
 }

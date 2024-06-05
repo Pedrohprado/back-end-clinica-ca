@@ -27,17 +27,47 @@ export const createNewVacine = async (
 ) => {
   try {
     const { idAnimal } = req.params;
-    const { nomeVacina, dataAplicacao, observacoes } = req.body;
+    const data = req.body;
 
-    function searchWord(value: string) {
-      if (value.includes('v10')) {
-      }
+    let proximaVacinaDate = new Date(data.dataAplicacao);
+    data.dataAplicacao = new Date(data.dataAplicacao);
+
+    switch (data.tipoDeVacina) {
+      case 'v10':
+        if (data.dose === 'primeira') {
+          proximaVacinaDate.setDate(proximaVacinaDate.getDate() + 8 * 7);
+          data.proximaVacina = proximaVacinaDate;
+        }
+        if (data.dose === 'segunda') {
+          proximaVacinaDate.setDate(proximaVacinaDate.getDate() + 12 * 7);
+          data.proximaVacina = proximaVacinaDate;
+        }
+        if (data.dose === 'terceira') {
+          proximaVacinaDate.setDate(proximaVacinaDate.getDate() + 16 * 7);
+          data.proximaVacina = proximaVacinaDate;
+        }
+        if (
+          data.dose !== 'primeira' &&
+          data.dose !== 'segunda' &&
+          data.dose !== 'terceira'
+        ) {
+          proximaVacinaDate.setDate(proximaVacinaDate.getDate() + 16 * 7);
+          data.proximaVacina = proximaVacinaDate;
+        }
+        break;
+      case 'raiva':
+        proximaVacinaDate.setDate(proximaVacinaDate.getDate() + 16 * 7);
+        data.proximaVacina = proximaVacinaDate;
+        break;
     }
-    searchWord(nomeVacina);
-    //raiva - 16 semanas
-    //v10 - 8 semanas
-    //v10 2 dose - 12 semanas
-    //v10 3 dose - 16 semanas
+    data.animalId = +idAnimal;
+
+    if (data) {
+      const statusNewVacine = await prisma.vacina.create({
+        data,
+      });
+      res.json(statusNewVacine);
+    }
   } catch (error) {
     console.log(error);
     res.status(404).json({
