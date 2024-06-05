@@ -21,6 +21,7 @@ model Cliente {
 
 model Animal {
     id           Int           @id @default(autoincrement())
+    avatar       String?
     nome         String
     peso         Int
     pelagem      String

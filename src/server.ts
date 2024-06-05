@@ -1,12 +1,18 @@
 import express from 'express';
 import cors from 'cors';
 import { apiRoutes } from './router/routes';
+import path from 'path';
 
 const server = express();
 
 server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
+server.use(
+  '/avatar',
+  express.static(path.join(__dirname, 'public', 'uploads'))
+);
+// server.use('avatar', express.static(path.join(__dirname, 'public', 'uploads')));
 
 server.use('/clinic', apiRoutes);
 

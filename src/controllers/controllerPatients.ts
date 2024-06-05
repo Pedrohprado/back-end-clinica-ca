@@ -1,6 +1,7 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import { Animal } from '../models/modelPatients';
+import { upload } from '../multer/multer';
 
 const prisma = new PrismaClient();
 
@@ -53,41 +54,45 @@ export const showAllPatients = async (
   }
 };
 
-export const registerNewPatients = async (
-  req: express.Request,
-  res: express.Response
-) => {
-  try {
-    const { id } = req.params;
-    const body = req.body;
-    const { nome, peso, pelagem, sexo, especie, raca, dataNasc, status } =
-      req.body;
-    const date = new Date(dataNasc);
-    if (id) {
-      const statusNewPatients: Animal = await prisma.animal.create({
-        data: {
-          nome,
-          peso,
-          pelagem,
-          sexo,
-          especie,
-          raca,
-          dataNasc: date,
-          clienteId: +id,
-          status,
-        },
-      });
+export const registerNewPatients = [
+  upload.single('avatar'),
+  async (req: express.Request, res: express.Response) => {
+    try {
+      const { id } = req.params;
+      const { nome, peso, pelagem, sexo, especie, raca, dataNasc, status } =
+        req.body;
+      let avatar = req.file?.path;
+      avatar = avatar?.slice(20);
+      avatar = 'avatar/' + avatar;
+      const date = new Date(dataNasc);
+      if (id) {
+        console.log(avatar);
+        const statusNewPatients: Animal = await prisma.animal.create({
+          data: {
+            nome,
+            peso: +peso,
+            pelagem,
+            sexo,
+            especie,
+            raca,
+            dataNasc: date,
+            clienteId: +id,
+            status,
+            avatar,
+          },
+        });
 
-      if (statusNewPatients)
-        res.status(201).json({ warning: 'paciente criado com sucesso' });
+        if (statusNewPatients)
+          res.status(201).json({ warning: 'paciente criado com sucesso' });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
+        error: 'erro interno do servidor',
+      });
     }
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({
-      error: 'erro interno do servidor',
-    });
-  }
-};
+  },
+];
 
 export const updatePatients = async (
   req: express.Request,

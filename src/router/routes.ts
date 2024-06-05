@@ -38,3 +38,4 @@ apiRoutes.delete('/deletepatient/:id', deletePatient);
 apiRoutes.get('/vacines', showAllVacines);
 apiRoutes.get('/vacine/:idAnimal', showVacineByAnimal);
 apiRoutes.post('/newvacine/:idAnimal', createNewVacine);
+apiRoutes.put('/updatevacine/:idVacine');
