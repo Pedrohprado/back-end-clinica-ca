@@ -12,7 +12,6 @@ server.use(
   '/avatar',
   express.static(path.join(__dirname, 'public', 'uploads'))
 );
-// server.use('avatar', express.static(path.join(__dirname, 'public', 'uploads')));
 
 server.use('/clinic', apiRoutes);
 

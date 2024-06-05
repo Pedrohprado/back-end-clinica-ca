@@ -15,6 +15,7 @@ import {
 } from '../controllers/controllerClients';
 import {
   createNewVacine,
+  deleteVacine,
   showAllVacines,
   showVacineByAnimal,
 } from '../controllers/controllerVacine';
@@ -38,4 +39,4 @@ apiRoutes.delete('/deletepatient/:id', deletePatient);
 apiRoutes.get('/vacines', showAllVacines);
 apiRoutes.get('/vacine/:idAnimal', showVacineByAnimal);
 apiRoutes.post('/newvacine/:idAnimal', createNewVacine);
-apiRoutes.put('/updatevacine/:idVacine');
+apiRoutes.delete('/deletevacine/:idVacine', deleteVacine);

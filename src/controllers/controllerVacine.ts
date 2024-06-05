@@ -103,3 +103,27 @@ export const createNewVacine = async (
     });
   }
 };
+
+export const deleteVacine = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { idVacine } = req.params;
+
+    if (idVacine) {
+      const statusDelete = await prisma.vacina.delete({
+        where: {
+          id: +idVacine,
+        },
+      });
+
+      res.status(200).json({ warning: 'vacina deletada com sucesso!' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      warning: 'erro interno no servidor',
+    });
+  }
+};
