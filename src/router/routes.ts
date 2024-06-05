@@ -30,7 +30,7 @@ apiRoutes.delete('/deleteclient/:id', deleteClient);
 // routes for Animals
 apiRoutes.get('/patients', showAllPatients);
 apiRoutes.get('/patients/:id', showPatientsByClient);
-apiRoutes.post('/newpatients/:id', registerNewPatients);
+apiRoutes.post('/newpatients/:id', registerNewPatients); //my router call a array of functions
 apiRoutes.put('/updatepatient/:id', updatePatients);
 apiRoutes.delete('/deletepatient/:id', deletePatient);
 

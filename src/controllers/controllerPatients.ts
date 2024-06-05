@@ -2,6 +2,8 @@ import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import { Animal } from '../models/modelPatients';
 import { upload } from '../multer/multer';
+import path from 'path';
+import fs from 'fs';
 
 const prisma = new PrismaClient();
 
@@ -55,6 +57,7 @@ export const showAllPatients = async (
 };
 
 export const registerNewPatients = [
+  //in this function i catch name prop "avatar" and run multer.ts
   upload.single('avatar'),
   async (req: express.Request, res: express.Response) => {
     try {
@@ -128,16 +131,38 @@ export const deletePatient = async (
     const { id } = req.params;
 
     if (id) {
-      const statusPatientDelete = await prisma.animal.delete({
+      const patient = await prisma.animal.findUnique({
         where: {
           id: +id,
         },
       });
 
-      if (statusPatientDelete)
-        res.status(200).json({
-          warning: 'paciente deletado com sucesso',
+      if (!patient)
+        return res.status(404).json({
+          error: 'Paciente não encontrado',
         });
+
+      const statusPatientDelete = await prisma.animal.delete({
+        where: {
+          id: patient.id,
+        },
+      });
+
+      if (statusPatientDelete)
+        if (patient.avatar) {
+          const avatar = patient.avatar.slice(6);
+          const filePath = path.join(
+            __dirname,
+            '..',
+            'public',
+            'uploads',
+            avatar
+          );
+          fs.unlinkSync(filePath);
+        }
+      res.status(200).json({
+        warning: 'paciente deletado com sucesso',
+      });
     }
   } catch (error) {
     console.log(error);
