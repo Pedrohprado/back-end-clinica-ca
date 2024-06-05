@@ -104,6 +104,74 @@ export const createNewVacine = async (
   }
 };
 
+export const updateVacine = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { idVacine } = req.params;
+    const data = req.body;
+
+    if (data.dose) {
+      const vacina = await prisma.vacina.findUnique({
+        where: {
+          id: +idVacine,
+        },
+      });
+      if (vacina) {
+        let proximaVacinaDate = new Date(vacina.dataAplicacao);
+
+        switch (vacina.tipoDeVacina) {
+          case 'v10':
+            if (data.dose === 'primeira') {
+              proximaVacinaDate.setDate(proximaVacinaDate.getDate() + 8 * 7);
+              data.proximaVacina = proximaVacinaDate;
+            }
+            if (data.dose === 'segunda') {
+              proximaVacinaDate.setDate(proximaVacinaDate.getDate() + 12 * 7);
+              data.proximaVacina = proximaVacinaDate;
+            }
+            if (data.dose === 'terceira') {
+              proximaVacinaDate.setDate(proximaVacinaDate.getDate() + 16 * 7);
+              data.proximaVacina = proximaVacinaDate;
+            }
+            if (
+              data.dose !== 'primeira' &&
+              data.dose !== 'segunda' &&
+              data.dose !== 'terceira'
+            ) {
+              proximaVacinaDate.setDate(proximaVacinaDate.getDate() + 16 * 7);
+              data.proximaVacina = proximaVacinaDate;
+            }
+            break;
+          case 'raiva':
+            proximaVacinaDate.setDate(proximaVacinaDate.getDate() + 16 * 7);
+            data.proximaVacina = proximaVacinaDate;
+            break;
+        }
+      }
+    }
+    console.log(data);
+    if (idVacine) {
+      const updateVacine = await prisma.vacina.update({
+        data,
+        where: {
+          id: +idVacine,
+        },
+      });
+      console.log(updateVacine);
+      res.status(200).json({
+        warning: 'vacina atualizada com sucesso!',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      warning: 'erro interno no servidor',
+    });
+  }
+};
+
 export const deleteVacine = async (
   req: express.Request,
   res: express.Response
