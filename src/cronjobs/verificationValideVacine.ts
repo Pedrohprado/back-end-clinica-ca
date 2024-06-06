@@ -19,7 +19,7 @@ const transport = nodemailer.createTransport({
 const enviaEmail = async (mensage: string) => {
   const emailOptions = {
     from: 'mailtrap@demomailtrap.com',
-    to: 'eric.souza@ptractor.com.br',
+    to: ['cahborges2001@gmail.com'],
     subject: 'Vacinação Próxima',
     text: mensage,
   };
@@ -55,6 +55,8 @@ const verificationVacines = async () => {
       }, Vacina: ${
         vacina.nomeVacina
       }, Data de Aplicação: ${vacina.dataAplicacao.toLocaleDateString(
+        'pt-br'
+      )}, Data do vencimento: ${vacina.proximaVacina.toLocaleDateString(
         'pt-br'
       )}, numero do cliente: ${vacina.animal.cliente.telefone}\n`;
     });
