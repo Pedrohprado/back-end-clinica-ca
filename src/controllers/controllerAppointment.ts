@@ -75,3 +75,54 @@ export const createNewAppointment = async (
     });
   }
 };
+
+export const updateAppointment = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { idAppointment } = req.params;
+    const body = req.body;
+
+    if (idAppointment) {
+      const statusupdate = await prisma.atendimento.update({
+        data: body,
+
+        where: {
+          id: +idAppointment,
+        },
+      });
+      if (statusupdate) res.json({ warning: 'atendimento atualizado' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      warning: 'erro interno do servidor',
+    });
+  }
+};
+
+export const deleteAppointment = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { idAppointment } = req.params;
+
+    if (idAppointment) {
+      const statusDelete = await prisma.atendimento.delete({
+        where: {
+          id: +idAppointment,
+        },
+      });
+
+      if (statusDelete)
+        res.json({ warning: 'atendimento deletado com sucesso!' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      warning: 'erro interno do servidor',
+    });
+  }
+};
