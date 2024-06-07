@@ -20,6 +20,11 @@ import {
   showVacineByAnimal,
   updateVacine,
 } from '../controllers/controllerVacine';
+import {
+  createNewAppointment,
+  showAllAppointment,
+  showAppointment,
+} from '../controllers/controllerAppointment';
 
 export const apiRoutes = express.Router();
 
@@ -42,3 +47,8 @@ apiRoutes.get('/vacine/:idAnimal', showVacineByAnimal);
 apiRoutes.post('/newvacine/:idAnimal', createNewVacine);
 apiRoutes.put('/updatevacine/:idVacine', updateVacine);
 apiRoutes.delete('/deletevacine/:idVacine', deleteVacine);
+
+//routes for appointments
+apiRoutes.get('/appointments', showAllAppointment);
+apiRoutes.get('/appointment/:idAnimal', showAppointment);
+apiRoutes.post('/newappointment/:idAnimal', createNewAppointment);

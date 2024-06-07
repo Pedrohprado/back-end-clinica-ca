@@ -19,7 +19,7 @@ const transport = nodemailer.createTransport({
 const enviaEmail = async (mensage: string) => {
   const emailOptions = {
     from: 'mailtrap@demomailtrap.com',
-    to: ['cahborges2001@gmail.com'],
+    to: ['pedro.pedertractor@gmail.com'],
     subject: 'Vacinação Próxima',
     text: mensage,
   };
