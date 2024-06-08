@@ -55,4 +55,4 @@ apiRoutes.get('/appointments', showAllAppointment);
 apiRoutes.get('/appointment/:idAnimal', showAppointment);
 apiRoutes.post('/newappointment/:idAnimal', createNewAppointment);
 apiRoutes.put('/updateappointment/:idAppointment', updateAppointment);
-apiRoutes.delete('deleteappointment:/idAppointment', deleteAppointment);
+apiRoutes.delete('/deleteappointment:/idAppointment', deleteAppointment);

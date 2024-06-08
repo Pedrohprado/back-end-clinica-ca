@@ -65,6 +65,8 @@ const verificationVacines = async () => {
 
     //call function for send email
     // enviaEmail(emailBody);
+  } else {
+    console.log('nenhuma vacina para vencer');
   }
 };
 
