@@ -27,6 +27,7 @@ import {
   showAppointment,
   updateAppointment,
 } from '../controllers/controllerAppointment';
+import { getAnamnesis } from '../controllers/controllAnamnesis';
 
 export const apiRoutes = express.Router();
 
@@ -56,3 +57,6 @@ apiRoutes.get('/appointment/:idAnimal', showAppointment);
 apiRoutes.post('/newappointment/:idAnimal', createNewAppointment);
 apiRoutes.put('/updateappointment/:idAppointment', updateAppointment);
 apiRoutes.delete('/deleteappointment:/idAppointment', deleteAppointment);
+
+//routes for anamnesis
+apiRoutes.get('/getAnamnsesis/:idAppointment', getAnamnesis);

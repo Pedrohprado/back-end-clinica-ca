@@ -39,12 +39,21 @@ model Animal {
 }
 
 model Atendimento {
-    id              Int      @id @default(autoincrement())
-    dataAtendimento DateTime @default(now())
-    tipoSolicitacao String
-    status          String
-    animalId        Int
-    animal          Animal   @relation(fields: [animalId], references: [id])
+    id                Int      @id @default(autoincrement())
+    dataAtendimento   DateTime @default(now())
+    queixaprincipal   String
+    fezeseurina       String
+    ambiente          String
+    alimentacao       String
+    vacinacao         String
+    vermifugacao      String
+    ectoparasitas     String
+    historicoDeRepro  String
+    medicacaoContinua String
+    tipoSolicitacao   String
+    status            String
+    animalId          Int
+    animal            Animal   @relation(fields: [animalId], references: [id])
 }
 
 model Vacina {
