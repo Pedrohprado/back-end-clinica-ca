@@ -9,6 +9,7 @@ import {
 
 import {
   deleteClient,
+  findClientByName,
   registerNewClients,
   showAllClients,
   updateClient,
@@ -32,6 +33,9 @@ import { getAnamnesis } from '../controllers/controllAnamnesis';
 export const apiRoutes = express.Router();
 
 //routes for Clients
+
+apiRoutes.get('/client/:nome', findClientByName);
+
 apiRoutes.get('/clients', showAllClients);
 apiRoutes.post('/newclient', registerNewClients);
 apiRoutes.put('/updateclient/:id', updateClient);

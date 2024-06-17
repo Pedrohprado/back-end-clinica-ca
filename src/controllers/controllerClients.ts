@@ -106,3 +106,27 @@ export const deleteClient = async (
     });
   }
 };
+
+export const findClientByName = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { nome } = req.params;
+
+    if (nome) {
+      const clients = await prisma.cliente.findFirst({
+        where: {
+          nome,
+        },
+      });
+
+      res.status(200).json(clients);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'erro interno do servidor',
+    });
+  }
+};
